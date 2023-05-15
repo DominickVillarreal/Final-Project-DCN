@@ -6,7 +6,9 @@ public class PlayerCombat : MonoBehaviour
 {
     public Animator animator;
 
-
+    public Transform attackPoint;
+    public float attackRange = 0.5f;
+    public LayerMask enemylayers;
 
     // Update is called once per frame
     void Update()
@@ -21,7 +23,25 @@ public class PlayerCombat : MonoBehaviour
     {
         //play an attack animation
         animator.SetTrigger("Attack");
+
+
         //Detect ememies in range of attack
+        Collider2D[]hitEnemies = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemylayers);
+
         //damage
+        foreach(Collider2D enemy in hitEnemies)
+        {
+            Debug.Log("We hit" + enemy.name);
+        }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint = null)
+            return;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
+
+
+ 
